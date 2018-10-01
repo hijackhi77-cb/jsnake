@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <vector>
 #include <ncurses.h> // WINDOW
-#include "observer.h"
+#include "observer.h" // Inheritance from Observer
 
 class Map;
 
@@ -16,7 +16,7 @@ public:
 	TextDisplay(int height, int width);
 	~TextDisplay();
 	void notify(Subject *whoNotified) override;
-	void updateDisplay(Map *m);
+	void update(Map *m);
 };
 
 #endif

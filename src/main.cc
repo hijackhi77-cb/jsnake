@@ -1,9 +1,9 @@
-#include <unistd.h> // usleep
+#include <unistd.h> // usleep()
 #include <iostream>
-#include "map.h"
-#include "snake.h"
-#include "apple.h"
-#include "view/textdisplay.h"
+#include "../include/map.h"
+#include "../include/snake.h"
+#include "../include/apple.h"
+#include "../include/textdisplay.h"
 using namespace std;
 
 int main(int argc, char *argv[]) {
@@ -63,14 +63,10 @@ int main(int argc, char *argv[]) {
 		}
 
 		Map::getInstance()->getSnake()->forward();
-		if (Map::getInstance()->check()) {
-			Map::getInstance()->mapPrint();
-		} else {
-			break;
-		}
+		if (!Map::getInstance()->check()) break;
+		Map::getInstance()->mapPrint();
 	}
 
 	Map::getInstance()->deleteInstance();
-	endwin();
 	return 0;
 }

@@ -1,6 +1,6 @@
 #include <cstdlib> // rand()
 #include <iostream>
-#include "snake.h"
+#include "../../include/snake.h"
 using namespace std;
 
 Node::Node() {}
@@ -10,29 +10,31 @@ Node::Node(const Posn &p, const int dir)
 
 Snake::Snake(int w, int h, int x, int y, int dir)
 : width{w}, height{h} {
-	head = new Node(Posn(x, y), dir);
+	head = make_shared<Node>(Posn(x, y), dir);
 	tail = head;
 }
 
-Snake::~Snake() {
-	Node *node = head;
-		while(node) {
-    	Node *temp = node->next;
-    	delete node;
-    	node = temp;
-	}
-}
+Snake::~Snake() {}
 
-Node *Snake::getHead() const { return head; }
+shared_ptr<Node> Snake::getHead() const { return head; }
 
-Node *Snake::getTail() const { return tail; }
+shared_ptr<Node> Snake::getTail() const { return tail; }
 
 int Snake::getLen() const { return len; }
 
-Posn Snake::getLastTail() const { return lastTail; }
+Posn Snake::lastTail = Posn(-1, -1);
+
+Posn &Snake::getLastTail() const { return lastTail; }
+
+// TODO: snake init when user decides to replay
+/*void init(int w, int h, int x, int y, int dir) {
+	width = w;
+	height = h;
+
+}*/
 
 bool Snake::isSnakeBody(Posn &p) const {
-	Node *node = head->next;
+	shared_ptr<Node> node = head->next;
 	// TODO: find more efficient algorithm
 	// Solution: body nodes have order property,
 	//			 employ more advanced algorithm
@@ -49,7 +51,7 @@ bool Snake::isSnake(Posn &p) const {
 }
 
 void Snake::grow(const int step) {
-	Node *temp = new Node();
+	shared_ptr<Node> temp = make_shared<Node>();
 	temp->p = tail->p;
 	switch(tail->dir) {
 		case N:
@@ -68,8 +70,8 @@ void Snake::grow(const int step) {
 	// TODO: the case that len == height-2 or width-2
 	// Solution: try the other two direction
 	// Eg: N - try W and E
-	if (temp->p.x<1 || temp->p.x>width-1
-		|| temp->p.y<1 || temp->p.y>height-1) return;
+	if (temp->p.x < 1 || temp->p.x > width-1
+		|| temp->p.y < 1 || temp->p.y > height-1) return;
 	temp->prev = tail;
 	temp->next = nullptr;
 	temp->dir = tail->dir;
@@ -85,9 +87,10 @@ void Snake::changeDir(const int dir) {
 	head->dir = dir; 
 }
 
+// default step = 1
 void Snake::forward(const int step) {
 	lastTail = tail->p;
-	Node *node = tail;
+	shared_ptr<Node> node = tail;
 	while (node->prev) {
 		node->p = node->prev->p;
 		node->dir = node->prev->dir;

@@ -1,4 +1,4 @@
-#include "posn.h"
+#include "../../include/posn.h"
 
 Posn::Posn() {}
 

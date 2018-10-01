@@ -1,5 +1,5 @@
-#include "posn.h"
-#include "apple.h"
+#include "../../include/posn.h"
+#include "../../include/apple.h"
 
 Apple::Apple(const int x, const int y) : x{x}, y{y} {}
 
@@ -16,6 +16,6 @@ void Apple::generate(const Posn &p) {
 }
 
 void Apple::remove() {
-	this->x = 0;
-	this->y = 0;
+	this->x = -1;
+	this->y = -1;
 }

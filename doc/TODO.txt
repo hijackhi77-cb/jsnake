@@ -1,0 +1,13 @@
+------ 2018.09.30
+TODO:
+1. [snake.cc] re-init the snake when user decides to replay
+2. [snake.cc] find more efficient algorithm determining if a posn is part of snake
+3. [snake.cc] edge case for growing snake (when len = width or height - 2)
+4. ncurses memory leak
+   http://invisible-island.net/ncurses/ncurses.faq.html#config_leaks\
+DONE:
+1. Modified folder structure
+2. Optimized Makefile
+3. Optimized raw pointers to smart pointers
+4. Created this change log
+5. Updated README.md
